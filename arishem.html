@@ -1,0 +1,294 @@
+<head>
+    <title>Arishem Simulator</title>
+    <style>
+        body {
+            background-color: gray;
+            margin: 0;
+            padding: 0;
+        }
+
+        .deck {
+            width: 36rem;
+            margin: auto;
+            background-color: dimgray;
+            padding: 1rem;
+            display: inline-block;
+        }
+
+        img {
+            height: auto;
+            width: 6rem;
+        }
+
+        .draws {
+            width: auto;
+            background-color: orange;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        .draws div {
+            margin: 0;
+            padding: .5rem 0;
+            width: 6rem;
+            display: inline-block;
+            clear: none;
+            text-align: center;
+        }
+
+        .mull {
+            background-color: rgba(200, 200, 200, 0.5);
+        }
+
+        .t1 {
+            background-color: rgba(180, 180, 180, .5);
+        }
+
+        .t2 {
+            background-color: rgba(160, 160, 160, .5);
+        }
+
+        .t3 {
+            background-color: rgba(140, 140, 140, .5);
+        }
+
+        .t4 {
+            background-color: rgba(120, 120, 120, .5);
+        }
+
+        .t5 {
+            background-color: rgba(100, 100, 100, .5);
+        }
+
+        .t6 {
+            background-color: rgba(80, 80, 80, .5);
+        }
+
+        .deck {
+            background-color: rgba(0, 0, 0, .5);
+            display: flex;
+            width: auto;
+            flex-flow: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .deck img {
+            width: 5rem;
+        }
+
+        hr {
+            width: 100%:
+        }
+
+        .editor {
+            width: auto;
+            background-color: darkorange;
+            display: flex;
+            padding: 1rem;
+            align-content: center;
+        }
+
+        .editor button {
+            padding: .5rem 1rem;
+        }
+
+        .editor textarea {
+            margin-left: 1rem;
+            padding: .25rem .5rem;
+            min-height: 12.5rem;
+        }
+
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="draws">
+            <div class="mull">Opener</div>
+            <div class="t1">Turn 1</div>
+            <div class="t2">Turn 2</div>
+            <div class="t3">Turn 3</div>
+            <div class="t4">Turn 4</div>
+            <div class="t5">Turn 5</div>
+            <div class="t6">Turn 6</div>
+        </div>
+        <div class="deck"></div>
+        <div class="editor">
+            <button onclick="Regenerate()">Regenerate</button>
+            <textarea id="decklist" placeholder="Your decklist">
+Agent Coulson
+Nocturne
+Wave
+Shang-Chi
+Ms. Marvel
+White Queen
+Professor X
+Lady Deathstrike
+Legion
+Blob
+Magneto
+Arishem</textarea>
+        </div>
+    </main>
+
+    <script>
+        const cards = ["Abomination", "Absorbing Man", "Adam Warlock", "Aero", "Agatha Harkness", "Agent 13", "Agent Coulson", "Alioth", "America Chavez", "Angel", "Angela", "Annihilus", "Ant Man", "Apocalypse", "Armor", "Arnim Zola", "Attuma", "Baron Mordo", "Baron Zemo", "Bast", "Beast", "Beta Ray Bill", "Bishop", "Black Bolt", "Black Cat", "Black Knight", "Black Panther", "Black Swan", "Black Widow", "Blade", "Blob", "Blue Marvel", "Brood", "Bucky Barnes", "Cable", "Caiera", "Cannonball", "Captain America", "Captain Marvel", "Carnage", "Cerebro", "Cloak", "Colleen Wing", "Colossus", "Corvus Glaive", "Cosmo", "Crossbones", "Crystal", "Cull Obsidian", "Cyclops", "Dagger", "Daken", "Daredevil", "Darkhawk", "Dazzler", "Deadpool", "Death", "Deathlok", "Debrii", "Destroyer", "Devil Dinosaur", "Dr. Doom", "Doctor Octopus", "Doctor Strange", "Domino", "Dracula", "Drax", "Ebony Maw", "Echo", "Electro", "Elektra", "Elsa Bloodstone", "Enchantress", "Falcon", "Forge", "Galactus", "Gambit", "Gamora", "Ghost", "Ghost Rider", "Ghost-Spider", "Giganto", "Gladiator", "Goose", "Grand Master", "Green Goblin", "Groot", "Havok", "Hawkeye", "Hazmat", "Heimdall", "Hela", "Helicarrier", "Hellcow", "Hercules", "High Evolutionary", "Hit-Monkey", "Hobgoblin", "Hope Summers", "Howard The Duck", "Hulk", "Hulkbuster", "Human Torch", "Iceman", "Invisible Woman", "Iron Fist", "Iron Lad", "Iron Man", "Ironheart", "Jane Foster", "Jean Grey", "Jeff", "Jessica Jones", "Jubilee", "Juggernaut", "Ka-Zar", "Kang", "Killmonger", "Kingpin", "Kitty Pryde", "Klaw", "Knull", "Korg", "Kraven", "Lady Deathstrike", "Lady Sif", "Leader", "Leech", "Legion", "Lizard", "Lockjaw", "Loki", "Luke Cage", "M'Baku", "M.o.d.o.k.", "Magik", "Magneto", "Man-Thing", "Mantis", "Maria Hill", "Martyr", "Master Mold", "Maximus", "Medusa", "Miek", "Miles Morales", "Mirage", "Mr. Fantastic", "Mr. Negative", "Mr. Sinister", "Misty Knight", "Mobius M. Mobius", "Mockingbird", "Mojo", "Moon Girl", "Moon Knight", "Morbius", "Morph", "Ms. Marvel", "Multiple Man", "Mysterio", "Mystique", "Nakia", "Namor", "Nebula", "Negasonic Teenage Warhead", "Nick Fury", "Nico Minoru", "Nightcrawler", "Nimrod", "Nova", "Odin", "Okoye", "Omega Red", "Onslaught", "Orka", "Patriot", "The Phoenix Force", "Pixie", "Polaris", "Professor X", "Proxima Midnight", "Psylocke", "Punisher", "Quake", "Quicksilver", "Quinjet", "Ravonna Renslayer", "Red Guardian", "Red Hulk", "Red Skull", "Rescue", "Rhino", "Rocket Raccoon", "Rockslide", "Rogue", "Ronan", "Sabretooth", "Sandman", "Sauron", "Scarlet Witch", "Scorpion", "Sebastian Shaw", "Selene", "Sentinel", "Sentry", "Sera", "Shadow King", "Shang-Chi", "Shanna", "She-Hulk", "Shocker", "Shuri", "Silk", "Silver Samurai", "Silver Surfer", "Skaar", "Snowguard", "Spectrum", "Spider-Ham", "Spider-Man", "Spider-Man 2099", "Spider-Woman", "Squirrel Girl", "Star-Lord", "Stature", "Stegron", "Storm", "Strong Guy", "Sunspot", "Super-Skrull", "Supergiant", "Swarm", "Sword Master", "Taskmaster", "Thanos", "The Collector", "Hood", "Infinaut", "Living Tribunal", "TheThing", "Thor", "Titania", "Typhoid Mary", "U.S. Agent", "Uatu", "Ultron", "Valkyrie", "Venom", "Viper", "Vision", "Vulture", "War Machine", "Warpath", "Wasp", "Wave", "Werewolf By Night", "White Queen", "White Tiger", "Wolfsbane", "Wolverine", "Wong", "X-23", "Yellowjacket", "Yondu", "Zabu", "Zero",
+            "White Widow", "Valentina", "Blink", "Nocturne", "Namora", "Sage", "Sasquatch", "Gilgamesh", "Thena", "Sersi", "Makkari", "Phastos", "Arishem"
+        ];
+
+        function Regenerate() {
+            document.querySelector(".draws").innerHTML = "<div class='mull'>Opener</div><div class='t1'>Turn 1</div><div class='t2'>Turn 2</div><div class='t3'>Turn 3</div><div class='t4'>Turn 4</div><div class='t5'>Turn 5</div><div class='t6'>Turn 6</div>";
+            document.querySelector(".deck").innerHTML = "";
+            ArishemAddToDeck();
+        }
+
+        function ArishemAddToDeck() {
+            const temp = GetDeckFromText();
+            if (temp == null) {
+                alert("Deck is not 12 cards");
+                return;
+            }
+            const deck = temp.concat(GetRandomCards(12));
+            let draws = GenerateUniqueRandomNumbers(0, 24, 24);
+            for (let x = 0; x < 3; x++) {
+                let i = draws[x];
+                document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+            }
+            for (let x = 3; x < 9; x++) {
+                let i = draws[x];
+                document.querySelector(".t" + (x - 2)).insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+            }
+            for (let x = 9; x < 24; x++) {
+                let i = draws[x];
+                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+            }
+        }
+
+        function GetDeckFromText() {
+            const text = document.querySelector("#decklist").value.trim();
+            const lines = text.split(/\r?\n/);
+            if (lines.length < 12) {
+                return null;
+            }
+            const ret = [];
+            for (let i = 0; i < 12; i++) {
+                ret.push(ClosestCardName(lines[i], cards));
+            }
+            return ret;
+        }
+
+        function jaroDistance(s, t) {
+            if (s.length === 0 || t.length === 0) {
+                return 0;
+            }
+
+            const matchDistance = Math.floor(Math.max(s.length, t.length) / 2) - 1;
+            let sMatches = new Array(s.length).fill(false);
+            let tMatches = new Array(t.length).fill(false);
+
+            let matches = 0;
+            let transpositions = 0;
+
+            // Find matches
+            for (let i = 0; i < s.length; i++) {
+                const start = Math.max(0, i - matchDistance);
+                const end = Math.min(i + matchDistance + 1, t.length);
+
+                for (let j = start; j < end; j++) {
+                    if (tMatches[j]) continue;
+                    if (s[i] !== t[j]) continue;
+                    sMatches[i] = true;
+                    tMatches[j] = true;
+                    matches++;
+                    break;
+                }
+            }
+
+            if (matches === 0) return 0;
+
+            // Count transpositions
+            let k = 0;
+            for (let i = 0; i < s.length; i++) {
+                if (!sMatches[i]) continue;
+                while (!tMatches[k]) k++;
+                if (s[i] !== t[k]) transpositions++;
+                k++;
+            }
+
+            transpositions /= 2;
+
+            // Calculate Jaro distance
+            return (
+                (matches / s.length +
+                    matches / t.length +
+                    (matches - transpositions) / matches) / 3
+            );
+        }
+
+        function jaroWinklerDistance(s, t, scalingFactor = 0.1) {
+            const jaroDist = jaroDistance(s, t);
+            let prefixLength = 0;
+            const maxPrefixLength = 4; // Maximum prefix length to consider
+
+            for (let i = 0; i < Math.min(s.length, t.length); i++) {
+                if (s[i] !== t[i]) break;
+                prefixLength++;
+            }
+
+            prefixLength = Math.min(maxPrefixLength, prefixLength);
+            return jaroDist + (prefixLength * scalingFactor * (1 - jaroDist));
+        }
+
+        function ClosestCardName(target, candidates) {
+            let closest = candidates[0];
+            let minDistance = jaroWinklerDistance(target, closest);
+
+            for (let i = 1; i < candidates.length; i++) {
+                const dist = jaroWinklerDistance(target, candidates[i]);
+                if (dist > minDistance) {
+                    minDistance = dist;
+                    closest = candidates[i];
+                }
+            }
+
+            return closest;
+        }
+
+        function GetRandomCards(amount) {
+            const ret = [];
+            let rands = GenerateUniqueRandomNumbers(0, cards.length, amount);
+            for (let i = 0; i < amount; i++) {
+                ret.push(cards[rands[i]]);
+            }
+            return ret;
+        }
+
+        function GenerateUniqueRandomNumbers(min, max, amount) {
+            const uniqueNumbers = new Set();
+            while (uniqueNumbers.size < amount) {
+                const randomNumber = Math.floor(Math.random() * (max - min)) + min;
+                uniqueNumbers.add(randomNumber);
+            }
+            return Array.from(uniqueNumbers);
+        }
+
+        function RenderAllCards() {
+            for (let i = 0; i < 24; i++) {
+                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img loading='lazy' src='" + NameToURL(cards[i], true) + "'>");
+            }
+        }
+
+        function NameToURL(card, rare) {
+            return "https://static.marvelsnap.pro/cards/" + FixName(card) + (rare ? "-infinity.webp" : ".webp");
+        }
+
+        function FixName(card) {
+            return card.replaceAll('-', '').replaceAll(' ', '').replaceAll('.', '').replaceAll("'", "");
+        }
+
+        ArishemAddToDeck();
+
+    </script>
+</body>
