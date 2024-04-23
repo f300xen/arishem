@@ -146,7 +146,13 @@ Arishem</textarea>
         ];
 
         function Regenerate() {
-            document.querySelector(".draws").innerHTML = "<div class='mull'>Opener</div><div class='t1'>Turn 1</div><div class='t2'>Turn 2</div><div class='t3'>Turn 3</div><div class='t4'>Turn 4</div><div class='t5'>Turn 5</div><div class='t6'>Turn 6</div>";
+            document.querySelector(".mull").innerHTML = "Opener";
+            document.querySelector(".t1").innerHTML = "Turn 1";
+            document.querySelector(".t2").innerHTML = "Turn 2";
+            document.querySelector(".t3").innerHTML = "Turn 3";
+            document.querySelector(".t4").innerHTML = "Turn 4";
+            document.querySelector(".t5").innerHTML = "Turn 5";
+            document.querySelector(".t6").innerHTML = "Turn 6";
             document.querySelector(".deck").innerHTML = "";
             ArishemAddToDeck();
         }
