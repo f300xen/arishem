@@ -89,16 +89,22 @@
             display: flex;
             padding: 1rem;
             align-content: center;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
         }
 
         .editor button {
             padding: .5rem 1rem;
+            margin: .5rem;
+            display: block;
         }
 
         .editor textarea {
-            margin-left: 1rem;
             padding: .25rem .5rem;
+            margin: .5rem;
             min-height: 12.5rem;
+            display: block;
         }
 
     </style>
@@ -114,9 +120,7 @@
             <div class="t4">Turn 4</div>
             <div class="t5">Turn 5</div>
             <div class="t6">Turn 6</div>
-        </div>
-        <div class="deck"></div>
-        <div class="editor">
+            <div class="editor">
             <button onclick="Regenerate()">Regenerate</button>
             <textarea id="decklist" placeholder="Your decklist">
 Agent Coulson
@@ -132,6 +136,8 @@ Blob
 Magneto
 Arishem</textarea>
         </div>
+        </div>
+        <div class="deck"></div>
     </main>
 
     <script>
