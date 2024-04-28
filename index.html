@@ -504,7 +504,7 @@ Arishem</textarea>
                 } else if (i < weights[0] + weights[1] + weights[2]) {
                     location = locations["rare"][rl[x]];
                 } else {
-                    location = locations["ultra-rare"][ur[x]];
+                    location = locations["ultra-rare"][url[x]];
                 }
                 document.querySelector(".t" + (x + 1)).insertAdjacentHTML("beforeend", "<img height='128' width='128' class='location' src='" + LocationNameToURL(location) + "'>");
             };
