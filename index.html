@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <title>Arishem Simulator</title>
     <link rel="icon" type="image/png" href="favicon.png">
@@ -13,19 +14,11 @@
             padding: 0;
         }
 
-        .deck {
-            width: 36rem;
-            margin: auto;
-            background-color: dimgray;
-            padding: 1rem;
-            display: inline-block;
-        }
-
         img {
             height: auto;
             width: 6rem;
         }
-        
+
         img.location {
             position: relative;
             width: 8rem;
@@ -85,6 +78,8 @@
             flex-flow: wrap;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
+            margin: auto;
         }
 
         .deck img {
@@ -119,6 +114,20 @@
             display: block;
         }
 
+        .randoms {
+            display: flex;
+            padding: 1rem;
+            margin: auto;
+        }
+
+        .randoms img {
+            margin-right: -1rem;
+        }
+
+        .randoms span img {
+            width: 5rem;
+        }
+
     </style>
 </head>
 
@@ -150,6 +159,31 @@ Arishem</textarea>
             </div>
         </div>
         <div class="deck"></div>
+        <div class="randoms">
+            <div class="agent13">
+                <img height='96' width='96' src='https://static.marvelsnap.pro/cards/Agent13-legendary.webp'>
+                <span>
+                </span>
+            </div>
+            <div class="maria">
+                <img height='96' width='96' src='https://static.marvelsnap.pro/cards/MariaHill-legendary.webp'>
+                <span>
+                </span>
+            </div>
+            <div class="valentina">
+                <img height='96' width='96' src='https://static.marvelsnap.pro/cards/Valentina-legendary.webp'>
+                <span></span>
+            </div>
+            <div class="coulson">
+                <img height='96' width='96' src='https://static.marvelsnap.pro/cards/AgentCoulson-legendary.webp'>
+                <span>
+                </span>
+            </div>
+            <div class="nickfury">
+                <img height='96' width='96' src='https://static.marvelsnap.pro/cards/NickFury-legendary.webp'>
+                <span></span>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -458,7 +492,13 @@ Arishem</textarea>
             document.querySelector(".t4").innerHTML = "Turn 4";
             document.querySelector(".t5").innerHTML = "Turn 5";
             document.querySelector(".t6").innerHTML = "Turn 6";
-            document.querySelector(".deck").innerHTML = "";
+            document.querySelector(".deck").innerHTML =
+                document.querySelector(".agent13 span").innerHTML =
+                document.querySelector(".maria span").innerHTML =
+                document.querySelector(".valentina span").innerHTML =
+                document.querySelector(".coulson span").innerHTML =
+                document.querySelector(".nickfury span").innerHTML =
+                "";
             Generate();
         }
 
@@ -508,6 +548,26 @@ Arishem</textarea>
                 }
                 document.querySelector(".t" + (x + 1)).insertAdjacentHTML("beforeend", "<img height='128' width='128' class='location' src='" + LocationNameToURL(location) + "'>");
             };
+
+            let thirteen = GetRandomCards(1)[0];
+            document.querySelector(".agent13 span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(thirteen, false) + "'>");
+
+            let maria = GenerateUniqueRandomNumbers(0, twos.length, 1)[0];
+            document.querySelector(".maria span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(twos[maria], false) + "'>");
+
+            let valentina = GenerateUniqueRandomNumbers(0, sixes.length, 1)[0];
+            document.querySelector(".valentina span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(sixes[valentina], false) + "'>");
+
+            let coulsonA = GenerateUniqueRandomNumbers(0, fours.length, 1)[0];
+            let coulsonB = GenerateUniqueRandomNumbers(0, fives.length, 1)[0]
+            document.querySelector(".coulson span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(fours[coulsonA], false) + "'>");
+            document.querySelector(".coulson span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(fives[coulsonB], false) + "'>");
+
+            let nick = GenerateUniqueRandomNumbers(0, sixes.length, 3);
+            for (let x = 0; x < 3; x++) {
+                let i = nick[x];
+                document.querySelector(".nickfury span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(sixes[i], false) + "'>");
+            }
         }
 
         function GetDeckFromText() {
