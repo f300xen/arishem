@@ -563,10 +563,10 @@ Arishem</textarea>
             document.querySelector(".coulson span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(fours[coulsonA], false) + "'>");
             document.querySelector(".coulson span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(fives[coulsonB], false) + "'>");
 
-            let nick = GenerateUniqueRandomNumbers(0, sixes.length, 3);
+            let nick = GenerateUniqueRandomNumbers(0, sixes.length, 4);
             for (let x = 0; x < 3; x++) {
                 let i = nick[x];
-                document.querySelector(".nickfury span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(sixes[i], false) + "'>");
+                document.querySelector(".nickfury span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(sixes[i] === "Agatha Harkness" ? sixes[nick[3]] : sixes[i], false) + "'>");
             }
         }
 
