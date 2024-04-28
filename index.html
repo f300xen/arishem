@@ -1,10 +1,6 @@
+<!DOCTYPE html>
 <head>
     <title>Arishem Simulator</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta property="og:title" content="Arishem Simulator" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://f300xen.github.io/arishem/" />
-    <meta property="og:image" content="https://game-assets.snap.fan/card_variant_images/Arishem_04-d8d899a8f9b6ac247cd540981642e29797f29fff419969a9f5fa862dc408bfaa.webp" />
     <style>
         body {
             background-color: gray;
@@ -23,6 +19,13 @@
         img {
             height: auto;
             width: 6rem;
+        }
+        
+        img.location {
+            position: relative;
+            width: 8rem;
+            margin-left: -1rem;
+            z-index: 8000;
         }
 
         .draws {
@@ -125,21 +128,21 @@
             <div class="t5">Turn 5</div>
             <div class="t6">Turn 6</div>
             <div class="editor">
-            <button onclick="Regenerate()">Regenerate</button>
-            <textarea id="decklist" placeholder="Your decklist">
-Cable
-Valentina
+                <button onclick="Regenerate()">Regenerate</button>
+                <textarea id="decklist" placeholder="Your decklist">
 Agent Coulson
+Nocturne
 Wave
-Shang
-Loki
-Prof X
+Shang-Chi
+Ms. Marvel
+White Queen
+Professor X
 Lady Deathstrike
 Legion
 Blob
 Magneto
 Arishem</textarea>
-        </div>
+            </div>
         </div>
         <div class="deck"></div>
     </main>
@@ -148,6 +151,299 @@ Arishem</textarea>
         const cards = ["Abomination", "Absorbing Man", "Adam Warlock", "Aero", "Agatha Harkness", "Agent 13", "Agent Coulson", "Alioth", "America Chavez", "Angel", "Angela", "Annihilus", "Ant Man", "Apocalypse", "Armor", "Arnim Zola", "Attuma", "Baron Mordo", "Baron Zemo", "Bast", "Beast", "Beta Ray Bill", "Bishop", "Black Bolt", "Black Cat", "Black Knight", "Black Panther", "Black Swan", "Black Widow", "Blade", "Blob", "Blue Marvel", "Brood", "Bucky Barnes", "Cable", "Caiera", "Cannonball", "Captain America", "Captain Marvel", "Carnage", "Cerebro", "Cloak", "Colleen Wing", "Colossus", "Corvus Glaive", "Cosmo", "Crossbones", "Crystal", "Cull Obsidian", "Cyclops", "Dagger", "Daken", "Daredevil", "Darkhawk", "Dazzler", "Deadpool", "Death", "Deathlok", "Debrii", "Destroyer", "Devil Dinosaur", "Dr. Doom", "Doctor Octopus", "Doctor Strange", "Domino", "Dracula", "Drax", "Ebony Maw", "Echo", "Electro", "Elektra", "Elsa Bloodstone", "Enchantress", "Falcon", "Forge", "Galactus", "Gambit", "Gamora", "Ghost", "Ghost Rider", "Ghost-Spider", "Giganto", "Gladiator", "Goose", "Grand Master", "Green Goblin", "Groot", "Havok", "Hawkeye", "Hazmat", "Heimdall", "Hela", "Helicarrier", "Hellcow", "Hercules", "High Evolutionary", "Hit-Monkey", "Hobgoblin", "Hope Summers", "Howard The Duck", "Hulk", "Hulkbuster", "Human Torch", "Iceman", "Invisible Woman", "Iron Fist", "Iron Lad", "Iron Man", "Ironheart", "Jane Foster", "Jean Grey", "Jeff", "Jessica Jones", "Jubilee", "Juggernaut", "Ka-Zar", "Kang", "Killmonger", "Kingpin", "Kitty Pryde", "Klaw", "Knull", "Korg", "Kraven", "Lady Deathstrike", "Lady Sif", "Leader", "Leech", "Legion", "Lizard", "Lockjaw", "Loki", "Luke Cage", "M'Baku", "M.o.d.o.k.", "Magik", "Magneto", "Man-Thing", "Mantis", "Maria Hill", "Martyr", "Master Mold", "Maximus", "Medusa", "Miek", "Miles Morales", "Mirage", "Mr. Fantastic", "Mr. Negative", "Mr. Sinister", "Misty Knight", "Mobius M. Mobius", "Mockingbird", "Mojo", "Moon Girl", "Moon Knight", "Morbius", "Morph", "Ms. Marvel", "Multiple Man", "Mysterio", "Mystique", "Nakia", "Namor", "Nebula", "Negasonic Teenage Warhead", "Nick Fury", "Nico Minoru", "Nightcrawler", "Nimrod", "Nova", "Odin", "Okoye", "Omega Red", "Onslaught", "Orka", "Patriot", "The Phoenix Force", "Pixie", "Polaris", "Professor X", "Proxima Midnight", "Psylocke", "Punisher", "Quake", "Quicksilver", "Quinjet", "Ravonna Renslayer", "Red Guardian", "Red Hulk", "Red Skull", "Rescue", "Rhino", "Rocket Raccoon", "Rockslide", "Rogue", "Ronan", "Sabretooth", "Sandman", "Sauron", "Scarlet Witch", "Scorpion", "Sebastian Shaw", "Selene", "Sentinel", "Sentry", "Sera", "Shadow King", "Shang-Chi", "Shanna", "She-Hulk", "Shocker", "Shuri", "Silk", "Silver Samurai", "Silver Surfer", "Skaar", "Snowguard", "Spectrum", "Spider-Ham", "Spider-Man", "Spider-Man 2099", "Spider-Woman", "Squirrel Girl", "Star-Lord", "Stature", "Stegron", "Storm", "Strong Guy", "Sunspot", "Super-Skrull", "Supergiant", "Swarm", "Sword Master", "Taskmaster", "Thanos", "The Collector", "Hood", "Infinaut", "Living Tribunal", "TheThing", "Thor", "Titania", "Typhoid Mary", "U.S. Agent", "Uatu", "Ultron", "Valkyrie", "Venom", "Viper", "Vision", "Vulture", "War Machine", "Warpath", "Wasp", "Wave", "Werewolf By Night", "White Queen", "White Tiger", "Wolfsbane", "Wolverine", "Wong", "X-23", "Yellowjacket", "Yondu", "Zabu", "Zero",
             "White Widow", "Valentina", "Blink", "Nocturne", "Namora", "Sage", "Sasquatch", "Gilgamesh", "Thena", "Sersi", "Makkari", "Phastos", "Arishem"
         ];
+
+        const twos = [
+            "Angela",
+            "Armor",
+            "Baron Mordo",
+            "Beast",
+            "Bucky Barnes",
+            "Cable",
+            "Carnage",
+            "Cloak",
+            "Colleen Wing",
+            "Colossus",
+            "Dagger",
+            "Daredevil",
+            "Dazzler",
+            "Doctor Strange",
+            "Domino",
+            "Falcon",
+            "Forge",
+            "Goose",
+            "Grand Master",
+            "Havok",
+            "Hazmat",
+            "Hulkbuster",
+            "Invisible Woman",
+            "Jeff",
+            "Kingpin",
+            "Kraven",
+            "Lizard",
+            "Master Mold",
+            "Maximus",
+            "Medusa",
+            "Mirage",
+            "Mr. Sinister"
+        ];
+        const fours = [
+            "Absorbing Man",
+            "Attuma",
+            "Beta Ray Bill",
+            "Black Cat",
+            "Captain Marvel",
+            "Crossbones",
+            "Cull Obsidian",
+            "Dracula",
+            "Drax",
+            "Enchantress",
+            "Ghost Rider",
+            "Hellcow",
+            "Hercules",
+            "High Evolutionary",
+            "Iron Lad",
+            "Jessica Jones",
+            "Jubilee",
+            "Ka-Zar",
+            "Lockjaw",
+            "Loki",
+            "Man-Thing",
+            "Miles Morales",
+            "Mr. Negative",
+            "Moon Girl",
+            "Ms. Marvel",
+            "Namor",
+            "Nick Fury",
+            "Omega Red",
+            "The Phoenix Force",
+            "Proxima Midnight",
+            "Rescue",
+            "Sentry",
+            "Sage"
+        ];
+        const fives = [
+            "Abomination",
+            "Adam Warlock",
+            "Aero",
+            "Annihilus",
+            "Black Bolt",
+            "Black Panther",
+            "Blue Marvel",
+            "Cannonball",
+            "Darkhawk",
+            "Devil Dinosaur",
+            "Doctor Octopus",
+            "Gamora",
+            "Hobgoblin",
+            "Iron Man",
+            "Jane Foster",
+            "Kang",
+            "Klaw",
+            "Lady Deathstrike",
+            "Leech",
+            "Legion",
+            "M.o.d.o.k.",
+            "Mockingbird",
+            "Nimrod",
+            "Professor X",
+            "Red Skull",
+            "Ronan",
+            "Sandman",
+            "Sera",
+            "Spider-Man 2099",
+            "Spider-Woman",
+            "Stature",
+            "Taskmaster",
+            "Blink",
+            "Namora",
+            "Gilgamesh",
+            "Sersi"
+        ];
+        const sixes = [
+            "Agatha Harkness",
+            "Alioth",
+            "Apocalypse",
+            "Arnim Zola",
+            "Blob",
+            "Destroyer",
+            "Dr Doom",
+            "Galactus",
+            "Giganto",
+            "Heimdall",
+            "Hela",
+            "Helicarrier",
+            "Hulk",
+            "Knull",
+            "Leader",
+            "Magneto",
+            "Odin",
+            "Onslaught",
+            "Orka",
+            "Red Hulk",
+            "She-Hulk",
+            "Skaar",
+            "Spectrum",
+            "Thanos",
+            "Infinaut",
+            "Living Tribunal",
+            "Ultron",
+            "Sasquatch"
+        ];
+
+        const locations = {
+            "rare": [
+                "altar of death",
+                "bar with no name",
+                "black vortex",
+                "castle zemo",
+                "collapsed mine",
+                "crown city",
+                "deep space",
+                "district x",
+                "great web",
+                "luke's bar",
+                // "milano",
+                "morag",
+                "mount vesuvius",
+                "new york",
+                "noor dimension",
+                "olympia",
+                // "plunder castle",
+                "quantum tunnel",
+                "rickety bridge",
+                "sanctuary ii",
+                "tarnax iv",
+                "the peak",
+                "the sacred timeline",
+                // "the sandbar",
+                "the triskelion",
+                "tva",
+                "utopia",
+                "valley of the hand",
+                "warrior falls",
+                "weirdworld"
+            ],
+            "common": [
+                "asgard",
+                "asteroid m",
+                "atlantis",
+                "aunt may's",
+                "avengers compound",
+                "baxter building",
+                "castle blackstone",
+                "central park",
+                "cloning vats",
+                // "counter-earth",
+                "crimson cosmos",
+                // "crystal towers",
+                "daily bugle",
+                "danger room",
+                "dark dimension",
+                "dream dimension",
+                "elysium",
+                "eternity range",
+                "fisk tower",
+                //"genosha",
+                "hala",
+                "hellfire club",
+                "k'un-lun",
+                "kamar-taj",
+                "kyln",
+                "lake hellas",
+                "lemuria",
+                // "madripoor",
+                "miniaturized lab",
+                "mirror dimension",
+                "mojoworld",
+                "monster island",
+                "monster metropolis",
+                // "mother mold",
+                // "mt. wundagore",
+                "muir island",
+                "murderworld",
+                "necrosha",
+                "nidavellir",
+                "onslaught's citadel",
+                "pet mansion",
+                // "ruins",
+                "sakaar",
+                "savage land",
+                "sewer system",
+                // "shadowland",
+                "sinister london",
+                "sokovia",
+                "stark tower",
+                "strange academy",
+                "subterranea",
+                // "t.a.h.i.t.i.",
+                "the bifrost",
+                "the big house",
+                "the hub",
+                "the raft",
+                "the vault",
+                "tinkerer's workshop",
+                "titan",
+                "vibranium mines",
+                "wakanda",
+                "wakandan embassy",
+                "washington d.c.",
+                "westview",
+                "white hot room",
+                "white palace",
+                "x-mansion",
+                "xandar",
+                // "yashida base"
+            ],
+            "uncommon": [
+                "attilan",
+                "bar sinister",
+                "camp lehigh",
+                "death's domain",
+                "gamma lab",
+                "grand central",
+                "great portal",
+                "hell's kitchen",
+                "hotel inferno",
+                "isle of silence",
+                "jotunheim",
+                "klyntar",
+                "knowhere",
+                "krakoa",
+                "lechuguilla",
+                "limbo",
+                "los diablos base",
+                "machineworld",
+                "mindscape",
+                "negative zone",
+                "nova roma",
+                "orchis forge",
+                "oscorp tower",
+                "panoptichron",
+                "pleasant hill",
+                "project pegasus",
+                "quantum realm",
+                "sanctum sanctorum",
+                "shuri's lab",
+                "starlight citadel",
+                "the abbey",
+                "the ice box",
+                "the nexus",
+                "the space throne",
+                "the superflow",
+                "throne room",
+                "thunderbolts tower",
+                "time theater",
+                // "transia",
+                "vormir"
+            ],
+            "ultra-rare": [
+                "cancun",
+                "ego",
+                "fogwell's gym",
+                "lamentis-1",
+                "worldship"
+            ]
+        };
 
         function Regenerate() {
             document.querySelector(".mull").innerHTML = "Opener";
@@ -158,10 +454,10 @@ Arishem</textarea>
             document.querySelector(".t5").innerHTML = "Turn 5";
             document.querySelector(".t6").innerHTML = "Turn 6";
             document.querySelector(".deck").innerHTML = "";
-            ArishemAddToDeck();
+            Generate();
         }
 
-        function ArishemAddToDeck() {
+        function Generate() {
             const temp = GetDeckFromText();
             if (temp == null) {
                 alert("Deck is not 12 cards");
@@ -171,16 +467,42 @@ Arishem</textarea>
             let draws = GenerateUniqueRandomNumbers(0, 24, 24);
             for (let x = 0; x < 3; x++) {
                 let i = draws[x];
-                document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
             for (let x = 3; x < 9; x++) {
                 let i = draws[x];
-                document.querySelector(".t" + (x - 2)).insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".t" + (x - 2)).insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
             for (let x = 9; x < 24; x++) {
                 let i = draws[x];
-                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
+
+            let cl = GenerateUniqueRandomNumbers(0, locations["common"].length, 3);
+            let ul = GenerateUniqueRandomNumbers(0, locations["uncommon"].length, 3);
+            let rl = GenerateUniqueRandomNumbers(0, locations["rare"].length, 3);
+            let url = GenerateUniqueRandomNumbers(0, locations["ultra-rare"].length, 3);
+            let weights = [locations["common"].length * 200,
+                locations["uncommon"].length * 125,
+                locations["rare"].length * 75,
+                locations["ultra-rare"].length * 15
+            ];
+            let rn = weights[0] + weights[1] + weights[2] + weights[3];
+            let rr = GenerateUniqueRandomNumbers(0, rn, 3);
+            for (let x = 0; x < 3; x++) {
+                let i = rr[x];
+                let location;
+                if (i < weights[0]) {
+                    location = locations["common"][cl[x]];
+                } else if (i < weights[0] + weights[1]) {
+                    location = locations["uncommon"][ul[x]];
+                } else if (i < weights[0] + weights[1] + weights[2]) {
+                    location = locations["rare"][rl[x]];
+                } else {
+                    location = locations["ultra-rare"][ur[x]];
+                }
+                document.querySelector(".t" + (x + 1)).insertAdjacentHTML("beforeend", "<img height='128' width='128' class='location' src='" + LocationNameToURL(location) + "'>");
+            };
         }
 
         function GetDeckFromText() {
@@ -305,7 +627,16 @@ Arishem</textarea>
             return card.replaceAll('-', '').replaceAll(' ', '').replaceAll('.', '').replaceAll("'", "");
         }
 
-        ArishemAddToDeck();
+        function LocationNameToURL(location) {
+            return "https://marvelsnapzone.com/wp-content/themes/blocksy-child/assets/media/cards/" + FixLocationName(location) + ".webp?v=182"
+        }
+
+        function FixLocationName(location) {
+            console.log(location);
+            return location.replaceAll(' ', '-').replaceAll("'", "").replaceAll('.', '');
+        }
+
+        Generate();
 
     </script>
 </body>
