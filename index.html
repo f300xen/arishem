@@ -508,7 +508,7 @@ Arishem</textarea>
                 alert("Deck is not 12 cards");
                 return;
             }
-            const deck = temp.concat(GetRandomCards(12, ' '));
+            const deck = temp.concat(GetRandomCards(12, " "));
             let quicksilver = deck.findIndex((e) => e == "Quicksilver");
             let domino = deck.findIndex((e) => e == "Domino");
             shuffleArray(deck);
@@ -672,11 +672,11 @@ Arishem</textarea>
             return closest;
         }
 
-        function GetRandomCards(amount) {
+        function GetRandomCards(amount, prefix="") {
             const ret = [];
             let rands = GenerateUniqueRandomNumbers(0, cards.length, amount);
             for (let i = 0; i < amount; i++) {
-                ret.push(cards[rands[i]]);
+                ret.push(prefix + cards[rands[i]]);
             }
             return ret;
         }
