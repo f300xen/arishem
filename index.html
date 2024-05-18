@@ -257,7 +257,8 @@ Arishem</textarea>
             "The Phoenix Force",
             "Proxima Midnight",
             "Rescue",
-            "Sentry"
+            "Sentry",
+            "Sage"
         ];
         const fives = [
             "Abomination",
@@ -507,18 +508,23 @@ Arishem</textarea>
                 alert("Deck is not 12 cards");
                 return;
             }
+            shuffleArray(temp);
             const deck = temp.concat(GetRandomCards(12));
-            let draws = GenerateUniqueRandomNumbers(0, 24, 24);
-            for (let x = 0; x < 3; x++) {
-                let i = draws[x];
+            let quicksilver = deck.findIndex((e) => e == "Quicksilver");
+            let domino = deck.findIndex((e) => e == "Domino");
+            if (quicksilver != -1) {
+                [deck[0], deck[quicksilver]] = [deck[quicksilver], deck[0]];
+            }
+            if (domino != -1) {
+                [deck[4], deck[domino]] = [deck[domino], deck[4]];
+            }
+            for (let i = 0; i < 3; i++) {
                 document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
-            for (let x = 3; x < 9; x++) {
-                let i = draws[x];
-                document.querySelector(".t" + (x - 2)).insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
+            for (let i = 3; i < 9; i++) {
+                document.querySelector(".t" + (i - 2)).insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
-            for (let x = 9; x < 24; x++) {
-                let i = draws[x];
+            for (let i = 9; i < 24; i++) {
                 document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(deck[i], i < 12) + "'>");
             }
 
@@ -566,6 +572,13 @@ Arishem</textarea>
             for (let x = 0; x < 3; x++) {
                 let i = nick[x];
                 document.querySelector(".nickfury span").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(sixes[i] === "Agatha Harkness" ? sixes[nick[3]] : sixes[i], false) + "'>");
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
         }
 
