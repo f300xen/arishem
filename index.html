@@ -508,10 +508,10 @@ Arishem</textarea>
                 alert("Deck is not 12 cards");
                 return;
             }
-            shuffleArray(temp);
             const deck = temp.concat(GetRandomCards(12));
             let quicksilver = deck.findIndex((e) => e == "Quicksilver");
             let domino = deck.findIndex((e) => e == "Domino");
+            shuffleArray(deck);
             if (quicksilver != -1) {
                 [deck[0], deck[quicksilver]] = [deck[quicksilver], deck[0]];
             }
