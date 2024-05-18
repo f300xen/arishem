@@ -509,9 +509,9 @@ Arishem</textarea>
                 return;
             }
             const deck = temp.concat(GetRandomCards(12, " "));
+            shuffleArray(deck);
             let quicksilver = deck.findIndex((e) => e == "Quicksilver");
             let domino = deck.findIndex((e) => e == "Domino");
-            shuffleArray(deck);
             if (quicksilver != -1) {
                 [deck[0], deck[quicksilver]] = [deck[quicksilver], deck[0]];
             }
