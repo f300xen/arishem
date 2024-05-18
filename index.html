@@ -508,7 +508,7 @@ Arishem</textarea>
                 alert("Deck is not 12 cards");
                 return;
             }
-            const deck = temp.concat(GetRandomCards(12));
+            const deck = temp.concat(GetRandomCards(12, ' '));
             let quicksilver = deck.findIndex((e) => e == "Quicksilver");
             let domino = deck.findIndex((e) => e == "Domino");
             shuffleArray(deck);
@@ -519,13 +519,13 @@ Arishem</textarea>
                 [deck[4], deck[domino]] = [deck[domino], deck[4]];
             }
             for (let i = 0; i < 3; i++) {
-                document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".mull").insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i].trim(), deck[i][0] != ' ') + "'>");
             }
             for (let i = 3; i < 9; i++) {
-                document.querySelector(".t" + (i - 2)).insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".t" + (i - 2)).insertAdjacentHTML("beforeend", "<img height='96' width='96' src='" + NameToURL(deck[i].trim(), deck[i][0] != ' ') + "'>");
             }
             for (let i = 9; i < 24; i++) {
-                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(deck[i], i < 12) + "'>");
+                document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(deck[i].trim(), deck[i][0] != ' ') + "'>");
             }
 
             let cl = GenerateUniqueRandomNumbers(0, locations["common"].length, 3);
