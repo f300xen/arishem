@@ -527,7 +527,6 @@ Arishem</textarea>
             for (let i = 9; i < 24; i++) {
                 document.querySelector(".deck").insertAdjacentHTML("beforeend", "<img height='80' width='80' src='" + NameToURL(deck[i].trim(), deck[i][0] != ' ') + "'>");
             }
-            console.log(deck);
             let cl = GenerateUniqueRandomNumbers(0, locations["common"].length, 3);
             let ul = GenerateUniqueRandomNumbers(0, locations["uncommon"].length, 3);
             let rl = GenerateUniqueRandomNumbers(0, locations["rare"].length, 3);
