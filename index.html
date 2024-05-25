@@ -257,8 +257,7 @@ Arishem</textarea>
             "The Phoenix Force",
             "Proxima Midnight",
             "Rescue",
-            "Sentry",
-            "Sage"
+            "Sentry"
         ];
         const fives = [
             "Abomination",
@@ -550,7 +549,7 @@ Arishem</textarea>
                 } else {
                     location = locations["ultra-rare"][url[x]];
                 }
-                document.querySelector(".t" + (x + 1)).insertAdjacentHTML("beforeend", "<img height='128' width='128' class='location' src='" + LocationNameToURL(location) + "'>");
+                document.querySelector(".t" + (x + 1)).insertAdjacentHTML("beforeend", "<img height='128' width='128' class='location' alt='" + location + "'src='" + LocationNameToURL(location) + "'>");
             };
 
             let thirteen = GetRandomCards(1)[0];
